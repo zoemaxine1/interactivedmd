@@ -93,7 +93,7 @@ function draw() {
     textAlign(CENTER);
     textSize(18);
 
-    text(collapseCenter.x, collapseCenter.y + 45);
+    text("!!", collapseCenter.x, collapseCenter.y + 45);
 
   } else {
     cursor(ARROW);
