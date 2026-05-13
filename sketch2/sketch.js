@@ -10,6 +10,8 @@ let orbX;
 let orbY;
 let orbSize = 40;
 
+let stars = [];
+
 function preload() {
   myFont = loadFont("Acidic.TTF");
 }
@@ -23,6 +25,20 @@ function setup() {
   // orb position
   orbX = width - 250;
   orbY = height - 200;
+
+  // create stars
+  for (let i = 0; i < 120; i++) {
+
+    stars.push({
+      x: random(width),
+      y: random(height),
+      size: random(1, 3),
+      alpha: random(40, 180),
+      speed: random(0.01, 0.05),
+      offset: random(TWO_PI)
+    });
+
+  }
 }
 
 function windowResized() {
@@ -35,6 +51,9 @@ function windowResized() {
 function draw() {
 
   background(0, 25);
+
+  // stars
+  drawStars();
 
   // moving text
   fill(random(255), random(255), random(255));
@@ -58,6 +77,31 @@ function mousePressed() {
   if (dist(mouseX, mouseY, orbX, orbY) < orbSize) {
 
     window.location.href = "../sketch3/index.html";
+
+  }
+
+}
+
+// stars
+function drawStars() {
+
+  noStroke();
+
+  for (let s of stars) {
+
+    let twinkle =
+      sin(frameCount * s.speed + s.offset);
+
+    let a =
+      map(twinkle, -1, 1, 20, s.alpha);
+
+    fill(255, a);
+
+    ellipse(
+      s.x,
+      s.y,
+      s.size
+    );
 
   }
 
