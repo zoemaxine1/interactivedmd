@@ -2,6 +2,7 @@
 // Code assisted by ChatGPT 5.5 (OpenAI). Prompts that directly influenced this sketch:
 // “Help me make small glowing orb that forms in bottom right ”
 // “help make orb click into sketch 3”
+// "help me add small twinkling stars throughout sketch"
 // generated with p5.js
 
 let myFont;
