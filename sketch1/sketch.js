@@ -1,7 +1,12 @@
 // sketch.js
-
 // zoe manalo
 // code from madi reyes "Po" with my changes noted
+//https://editor.p5js.org/madireyes/sketches/YTicXTfaW
+// Code assisted by ChatGPT 5.5 (OpenAI). Prompts that directly influenced this sketch:
+// “Help me make small compact ball form in middle when all balls r dispersed”
+// “help make ball click into sketch 2”
+// "make ball vibrate when compacted"
+// generated with p5.js
 
 var font;
 var points = [];

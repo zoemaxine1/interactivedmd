@@ -1,21 +1,34 @@
+/*
+Zoe Manalo
+Code assisted by ChatGPT 5.5 (OpenAI). Prompts that directly influenced this sketch:
+“Help me make the background look like it’s flickering.”
+“Help me form clouds at the top that are rolling.”
+“Help me make it so when clicked, each syllable is burned by lightning.”
+“Help me make a glowing cloud that clicks into the calm page.”
+generated with p5.js
+*/
+
+
 let shapes = [];
 let numberOfShapes = 100;
 let animateDistance = 50;
 let lightning = [];
 let clouds = [];
+let glowingCloud;
 let font;
 
-let word = "The Storm";
+let word = "THE STORM";
 let letters = [];
 let currentLetter = 0;
 
-// cloud, chatgpt "help "
+// cloud
 class Cloud {
-  constructor() {
+  constructor(glow = false) {
     this.x = random(width);
     this.y = random(50, 200);
     this.size = random(100, 200);
     this.speed = random(0.2, 1);
+    this.glow = glow;
   }
 
   move() {
@@ -25,11 +38,26 @@ class Cloud {
 
   show() {
     noStroke();
-    fill(50, 50, 60, 180);
+
+    if (this.glow && allLettersBurnt()) {
+      drawingContext.shadowBlur = 35;
+      drawingContext.shadowColor = "rgba(255, 241, 106, 0.9)";
+      fill(255, 241, 106, 220);
+    } else {
+      drawingContext.shadowBlur = 0;
+      fill(50, 50, 60, 180);
+    }
 
     ellipse(this.x, this.y, this.size);
     ellipse(this.x + 40, this.y + 10, this.size * 0.8);
     ellipse(this.x - 40, this.y + 10, this.size * 0.8);
+
+    drawingContext.shadowBlur = 0;
+  }
+
+  isClicked(mx, my) {
+    let d = dist(mx, my, this.x, this.y);
+    return d < this.size / 2;
   }
 }
 
@@ -65,7 +93,7 @@ class Shape {
   }
 }
 
-// -------- LIGHTNING --------
+// lightning
 class Lightning {
   constructor(x, y) {
     this.x = x;
@@ -104,14 +132,17 @@ function setup() {
   textSize(64);
   textAlign(CENTER, CENTER);
 
-  // rain
   for (let i = 0; i < numberOfShapes; i++) {
     shapes.push(new Shape());
   }
 
-  // clouds
   for (let i = 0; i < 6; i++) {
-    clouds.push(new Cloud());
+    let cloud = new Cloud(i === 0);
+    clouds.push(cloud);
+
+    if (i === 0) {
+      glowingCloud = cloud;
+    }
   }
 
   makeLetters();
@@ -136,22 +167,18 @@ function makeLetters() {
 function draw() {
   background(20, 20, random(20, 60));
 
-  // clouds (background)
   for (let c of clouds) {
     c.move();
     c.show();
   }
 
-  // rain
   for (let s of shapes) {
     s.animateShape();
     s.drawShape();
   }
 
-  // text
   drawLetters();
 
-  // lightning
   for (let i = lightning.length - 1; i >= 0; i--) {
     lightning[i].show();
     lightning[i].life--;
@@ -176,7 +203,16 @@ function drawLetters() {
   }
 }
 
+function allLettersBurnt() {
+  return letters.every(l => l.letter === " " || l.hit);
+}
+
 function mousePressed() {
+  if (allLettersBurnt() && glowingCloud.isClicked(mouseX, mouseY)) {
+    window.location.href = "../sketch1/index.html";
+    return;
+  }
+
   while (currentLetter < letters.length && letters[currentLetter].letter === " ") {
     currentLetter++;
   }

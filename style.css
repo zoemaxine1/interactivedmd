@@ -124,3 +124,24 @@ canvas {
 .back-button:hover {
   opacity: 0.6;
 }
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-size: 12px;
+  font-weight: 200;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: color 0.25s ease, opacity 0.25s ease;
+}
+
+.calm-link:hover {
+  color: #fff16a; 
+}
+
+.before-link:hover {
+  color: #ff2fa3; 
+}
+
+.storm-link:hover {
+  color: #1f3cff; 
+}
